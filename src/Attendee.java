@@ -66,6 +66,7 @@ public class Attendee extends Person {
 	public void SummaryMyLord() {
 		int i, j;
 		String paidPersonName = "No one";
+		int paidPersonAccompany = 0;
 		float shouldPay = 0.0f;
 	//	String eventName = "No such a game";
 	//	String eventTime = " ";
@@ -76,17 +77,30 @@ public class Attendee extends Person {
 			
 	//		eventName = eventList.get(i).getName();
 	//		eventTime = eventList.get(i).getDate();
-			shouldPay = eventList.get(i).getAvgCost();
+			
+			/////////////////========This loop should move to Event class as a method================////////////////////////
+			for(j = 0; j < eventList.get(i).getRecordList().size(); j++) {
+				if((this.getName() == eventList.get(i).getRecordList().get(j).getAttendee().getName()) && 
+				(eventList.get(i).getRecordList().get(j).getPaidMoeny() == 0.0)) {
+					int accompanyNumber = eventList.get(i).getRecordList().get(j).getAttendee().getNumberOfAccompany();
+					
+					shouldPay = eventList.get(i).getAvgCost() * (1 + accompanyNumber);
+					break;
+				}
+			}
+			////////////////=====================================================================/////////////////////////
 			
 			for(j = 0; j < eventList.get(i).getRecordList().size(); j++) {
 				
 				if(eventList.get(i).getRecordList().get(j).getPaidMoeny() != 0.0) {
 					paidPersonName = eventList.get(i).getRecordList().get(j).getAttendee().getName();
+					//paidPersonAccompany = eventList.get(i).getRecordList().get(j).getAttendee().getNumberOfAccompany();
 									
 					if(this.getName() != paidPersonName) {
-						 //you owe others
-						
+						 //you owe others						
 						int index = GetLordIndexInLordList(paidPersonName);
+						
+						
 						if(index != -1){
 							//lord already in Lordlist
 							UpdateOwnedMoney(index, shouldPay);							
@@ -125,7 +139,7 @@ public class Attendee extends Person {
 		
 		for(i = 0; i < eventList.size(); i++) {
 			
-			ownMeMoney = eventList.get(i).getAvgCost();
+			//ownMeMoney = eventList.get(i).getAvgCost();
 			
 			for(j = 0; j < eventList.get(i).getRecordList().size(); j++) { //find lord in single event				
 				if((eventList.get(i).getRecordList().get(j).getPaidMoeny() != 0.0) &&
@@ -142,6 +156,8 @@ public class Attendee extends Person {
 						int index;
 						
 						ownMeName = eventList.get(i).getRecord(j).getAttendee().getName();
+						ownMeMoney = ((eventList.get(i).getRecord(j).getAttendee().getNumberOfAccompany() + 1) * eventList.get(i).getAvgCost());
+						
 						index = GetOwnedIndexInOwnedList(ownMeName);
 						
 						if(index != -1){

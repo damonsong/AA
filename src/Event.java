@@ -97,7 +97,7 @@ public class Event {
 		
 		for(i = 0; i < getRecordList().size(); i++) {
 			if (getRecordList().get(i).getAttendee().getName() != whoPaid) {
-				System.out.println(getRecordList().get(i).getAttendee().getName() + " own " + whoPaid + " " + this.getAvgCost() + ".");
+				System.out.println(getRecordList().get(i).getAttendee().getName() + " own " + whoPaid + " " + (this.getAvgCost() * (1+getRecordList().get(i).getAttendee().getNumberOfAccompany())) + ".");
 			}
 
 		}
