@@ -74,42 +74,24 @@ public class Event {
 		return e; 
 	}
 
-	public void Summary() {
+	public String getWhoPaid() {
 		int i;
-		float avgCost = this.getAvgCost();
-		String whoPaid = "No one";
-		float paidMoney = 0.0f;
-		
-		System.out.println("+++++++++++++++++++++++ Summery +++++++++++++++++++++++++++++++++++");
-		System.out.println(">>> Total " + this.getTotalNumberOfAttendee() + " persons attend " + this.getName() + " on " + this.getDate());
-		System.out.println(">>> It costs " + this.getTotalCost());
-		System.out.println(">>> avg cost is " + avgCost);
+		String whoPaid = "Nobody";
 		
 		for(i = 0; i < getRecordList().size(); i++) {
 			if (getRecordList().get(i).getPaidMoeny() > 0) {
 				whoPaid = getRecordList().get(i).getAttendee().getName();
-				paidMoney = getRecordList().get(i).getPaidMoeny();
 				break;
 			}
 		}
 		
-		System.out.println(">>> " + whoPaid + " spent " + paidMoney + " for all of us!");
-		
-		for(i = 0; i < getRecordList().size(); i++) {
-			if (getRecordList().get(i).getAttendee().getName() != whoPaid) {
-				System.out.println(getRecordList().get(i).getAttendee().getName() + " own " + whoPaid + " " + (this.getAvgCost() * (1+getRecordList().get(i).getAttendee().getNumberOfAccompany())) + ".");
-			}
-
-		}
-		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
-		System.out.println("");
+		return whoPaid;
 	}
 
 
 	public ArrayList<Record> getRecordList() {
 		return RecordList;
 	}
-
 
 	public void setRecordList(ArrayList<Record> recordList) {
 		RecordList = recordList;

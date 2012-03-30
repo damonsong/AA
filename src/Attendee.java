@@ -186,4 +186,40 @@ public class Attendee extends Person {
 		}
 		System.out.println("*************************************************");
 	}
+	
+	public void summaryAll() {
+		SummaryMyLord();
+		SummaryWhoOwnMe();
+	}
+
+	public ArrayList<OwnedRecord> getOwnMeList() {
+
+		return ownedList;
+	}
+
+	public int getNumberOfWhoOwnMe(Event event1) {
+
+		return ownedList.size();
+	}
+
+	public String getWhoIsMyLord(Event event1) {
+		int index = eventList.indexOf(event1);
+		String whoPaid = eventList.get(index).getWhoPaid();
+		
+		if(this.getName() == whoPaid){
+			return "self";
+		}
+		else {
+			return whoPaid;			
+		}
+
+	}
+
+	public String getWhoOwnMe(Event event1, int index) {		
+		return ownedList.get(index).ownedName;
+	}
+
+	public Object getShouldPayMe(Event event1, int index) {
+		return ownedList.get(index).totalShouldPayMoney;
+	}
 }
