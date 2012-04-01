@@ -197,7 +197,7 @@ public class Attendee extends Person {
 		return ownedList;
 	}
 
-	public int getNumberOfWhoOwnMe(Event event1) {
+	public int getNumberOfWhoOwnMe() {
 
 		return ownedList.size();
 	}
@@ -215,11 +215,37 @@ public class Attendee extends Person {
 
 	}
 
-	public String getWhoOwnMe(Event event1, int index) {		
+	public String getWhoOwnMe(int index) {		
 		return ownedList.get(index).ownedName;
 	}
 
-	public Object getShouldPayMe(Event event1, int index) {
+	public Object getShouldPayMe(int index) {
 		return ownedList.get(index).totalShouldPayMoney;
+	}
+
+	public int getNumberOfIShouldRepayTo() {
+		int result = lordList.size();
+		return result;
+	}
+
+	public float getHowManyIShouldRepayTo(Attendee myLord) {
+		float result = 0.0f;
+		int index = -1;
+		
+		for(int i = 0; i < lordList.size(); i++) {
+			if (myLord.getName() == lordList.get(i).lordName){
+				index = i;
+				break;
+			}
+		}
+		
+		if(index != -1) {
+			result = lordList.get(index).totalOwnedMoney;
+		}
+		else{
+			System.out.println(myLord.getName() + " is not my lord!");
+		}
+		
+		return result;
 	}
 }
