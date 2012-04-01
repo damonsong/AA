@@ -10,7 +10,7 @@ public class Event {
 	private ArrayList<Record> RecordList = new ArrayList<Record>();
 
 	
-	public Event(String eventName, String where, String when, int totalCost) {		
+	public Event(String eventName, String where, String when, float totalCost) {		
 		this.name = eventName;
 		this.place = where;
 		this.date = when;

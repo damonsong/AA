@@ -8,6 +8,25 @@ import org.junit.Test;
 
 
 public class SingleEventTest {
+	private void testCase0() {
+		String expectedEventName = "Swimming";
+		String expectedEventPlace = "Chun Jian";
+		String expectedEventTime = "2012-3-3";
+		float expectedEventCost = 30.0f;
+		float expectedEventAvgCost = 0.0f;
+		int expectedTotalAttendee = 0;
+		
+		Event event = new Event(expectedEventName, expectedEventPlace, expectedEventTime, expectedEventCost);
+		
+		Assert.assertEquals(expectedEventName, event.getName());
+		Assert.assertEquals(expectedEventPlace, event.getPlace());
+		Assert.assertEquals(expectedEventTime, event.getDate());
+		Assert.assertEquals(expectedEventCost, event.getTotalCost());
+		
+		Assert.assertEquals(expectedEventAvgCost, event.getAvgCost());
+		Assert.assertEquals(expectedTotalAttendee, event.getTotalNumberOfAttendee());	
+	}
+	
 	private void testCase1() {
 		Event event1 = new Event("FB", "KFC", "2012-3-1", 30);		
 		Attendee ds = new Attendee("Damon Song");
@@ -93,6 +112,7 @@ public class SingleEventTest {
 
 	@Test
 	public void test() {
+		testCase0();
 		testCase1();
 		//fail("Not yet implemented");
 	}
