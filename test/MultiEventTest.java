@@ -44,9 +44,34 @@ public class MultiEventTest {
 		Assert.assertEquals(expectedPersonNumberDavidShouldRepayTo, howManyPersonDavidShouldRepayTo);
 		Assert.assertEquals(expectedRepayToDamon, DavidShouldRepayDamon);
 	}
+	
+	private void testCase1() {
+		Event event1 = new Event("Swimming", "FT", "2012-2-1", 90);
+		Event event2 = new Event("FB", "KFC", "2012-2-1", 150);
+		Attendee sh = new Attendee("Simon Huang");
+		Attendee wy = new Attendee("Wesley Yan");
+		Attendee dd = new Attendee("David Dong");
+		Database db = new Database();
+		
+		event1.AddRecord(sh, 0, 90);
+		event1.AddRecord(wy, 0, 0);
+		event1.AddRecord(dd, 0, 0);
+		
+		event2.AddRecord(sh, 0, 90);
+		event2.AddRecord(wy, 0, 0);
+		event2.AddRecord(dd, 0, 0);
+		
+		sh.summaryAll();
+		wy.summaryAll();
+		dd.summaryAll();
+		
+		Assert.assertEquals(2, sh.getNumberOfWhoOwnMe());
+		Assert.assertEquals(80, dd.getHowManyIShouldRepayTo(sh));
+	}
 	@Test
 	public void test() {
 		testCase0();
+		testCase1();
 		//fail("Not yet implemented");
 	}
 

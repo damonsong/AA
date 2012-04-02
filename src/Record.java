@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class Record {
+
+public class Record implements Serializable{
 	private Attendee attendee;
 	private float paidMoney = 0.0f;
 

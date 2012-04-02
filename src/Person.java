@@ -1,5 +1,7 @@
+import java.io.Serializable;
 
-public class Person {
+
+public class Person implements Serializable{
 	private String name;
 	
 	public void setName(String newName) {

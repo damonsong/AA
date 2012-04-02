@@ -1,7 +1,9 @@
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.io.*;
 
 
-public class Attendee extends Person {
+public class Attendee extends Person implements Serializable{
 	private int numberOfAccompany = 0;
 	private ArrayList<LordRecord> lordList = new ArrayList<LordRecord>();
 	private ArrayList<OwnedRecord> ownedList = new ArrayList<OwnedRecord>();

@@ -1,7 +1,7 @@
 import java.util.ArrayList;
+import java.io.*;
 
-
-public class Event {
+public class Event implements Serializable{
 	private String name;
 	private String place;
 	private String date;
