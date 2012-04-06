@@ -52,6 +52,65 @@ public class SingleEventTest {
 			dd.summaryAll();
 			break;
 		}
+
+		case 4: {
+			event = new Event("Swimming", "CJ", "2011-1-1", 90);
+			sh = new Attendee("Simon Huang");
+			ds = new Attendee("Damon Song");
+			
+			event.AddRecord(sh, 1, 90);
+			event.AddRecord(ds, 0, 0);
+			
+			sh.summaryAll();
+			ds.summaryAll();
+
+			break;
+		}
+		
+		case 5: {
+			event = new Event("Swimming", "CJ", "2011-1-1", 90);
+			sh = new Attendee("Simon Huang");
+			ds = new Attendee("Damon Song");
+			
+			event.AddRecord(sh, 0, 90);
+			event.AddRecord(ds, 1, 0);
+			
+			sh.summaryAll();
+			ds.summaryAll();
+
+			break;
+		}
+		
+		case 6: {
+			event = new Event("Swimming", "CJ", "2011-1-1", 180);
+			sh = new Attendee("Simon Huang");
+			ds = new Attendee("Damon Song");
+			
+			event.AddRecord(sh, 2, 120);
+			event.AddRecord(ds, 2, 0);
+			
+			sh.summaryAll();
+			ds.summaryAll();
+
+			break;
+		}
+
+		case 7: {
+			event = new Event("Swimming", "CJ", "2011-1-1", 270);
+			sh = new Attendee("Simon Huang");
+			ds = new Attendee("Damon Song");
+			dd = new Attendee("David Dong");
+			
+			event.AddRecord(sh, 3, 0);
+			event.AddRecord(ds, 2, 0);
+			event.AddRecord(dd, 1, 270);
+			
+			sh.summaryAll();
+			ds.summaryAll();
+			dd.summaryAll();
+
+			break;
+		}		
 		
 		case 10: {
 			event = new Event("Swimming", "CJ", "2011-1-1", 300);
@@ -211,6 +270,12 @@ public class SingleEventTest {
 		Assert.assertEquals(dd.getName(), ds.getWhoIsMyLord(event));
 		Assert.assertFalse(sh.getName() == ds.getWhoIsMyLord(event));
 	}
+
+	private void testWhoisMyLord3PLordwithAccompany() {
+		SetUp(4);
+		
+		Assert.assertEquals(sh.getName(), ds.getWhoIsMyLord(event));
+	}
 	
 	private void testWhoisMyLord10P() {
 		SetUp(10);
@@ -221,6 +286,7 @@ public class SingleEventTest {
 	private void testWhoisMyLordSuite() {
 		testWhoisMyLord2P();
 		testWhoisMyLord3P();
+		testWhoisMyLord3PLordwithAccompany();
 		testWhoisMyLord10P();
 	}
 	//////////////////////////////////////
@@ -241,6 +307,32 @@ public class SingleEventTest {
 		Assert.assertEquals(0.0f, sh.getHowManyIShouldRepayTo(ds));
 	}
 	
+	private void testHowManyIShouldRepayTo3PLordWithAccompany() {
+		SetUp(4);
+		
+		Assert.assertEquals(30.0f, ds.getHowManyIShouldRepayTo(sh));
+	}
+	
+	private void testHowManyIShouldRepayTo3POwnedWithAccompany() {
+		SetUp(5);
+		
+		Assert.assertEquals(60.0f, ds.getHowManyIShouldRepayTo(sh));
+	}
+	
+	private void testHowManyIShouldRepayTo4PAllWithAccompany() {
+		SetUp(6);
+		
+		Assert.assertEquals(90.0f, ds.getHowManyIShouldRepayTo(sh));
+	}
+	
+	private void testHowManyIShouldRepayTo9PAllWithAccompany() {
+		SetUp(7);
+		
+		Assert.assertEquals(90.0f, ds.getHowManyIShouldRepayTo(dd));
+		Assert.assertEquals(120.0f, sh.getHowManyIShouldRepayTo(dd));
+		Assert.assertEquals(0.0f, dd.getHowManyIShouldRepayTo(dd));
+	}
+	
 	private void testHowManyIShouldRepayTo10P() {
 		SetUp(10);
 		
@@ -249,14 +341,17 @@ public class SingleEventTest {
 	
 	private void testHowManyIShouldRepayToSuite() {
 		testHowManyIShouldRepayTo2P(); 
-		testHowManyIShouldRepayTo3P();	
+		testHowManyIShouldRepayTo3P();
+		testHowManyIShouldRepayTo3PLordWithAccompany();
+		testHowManyIShouldRepayTo3POwnedWithAccompany();
+		testHowManyIShouldRepayTo4PAllWithAccompany();
+		testHowManyIShouldRepayTo9PAllWithAccompany();
 		testHowManyIShouldRepayTo10P();
 	}
 	
 	private void testWhoOwnMe2P() {
 		SetUp(2);
 		
-		int index;
 		Assert.assertEquals(1, sh.getNumberOfWhoOwnMe());
 		Assert.assertEquals(ds.getName(), sh.getWhoOwnMe(0));
 		Assert.assertEquals(30.0f, sh.getShouldPayMe(0));
@@ -273,6 +368,28 @@ public class SingleEventTest {
 		for(index = 0; index < numberOfOwned; index++) {
 			Assert.assertFalse(dd.getName() == dd.getWhoOwnMe(index));
 			Assert.assertEquals(30.0f, dd.getShouldPayMe(index));			
+		}
+	}
+	
+	private void testWhoOwnMe9PAllWithAccompany() {
+		SetUp(7);
+		
+		int index;
+		int numberOfOwned = dd.getNumberOfWhoOwnMe();
+		
+		Assert.assertEquals(2, numberOfOwned);
+
+		for(index = 0; index < numberOfOwned; index++) {
+			Assert.assertFalse(dd.getName() == dd.getWhoOwnMe(index));
+			if(ds.getName() == dd.getWhoOwnMe(index)) {
+				Assert.assertEquals(90.0f, dd.getShouldPayMe(index));	
+			}
+			else if(sh.getName() == dd.getWhoOwnMe(index)) {
+				Assert.assertEquals(120.0f, dd.getShouldPayMe(index));
+			}
+			else {
+				fail("Nothing!");
+			}
 		}
 	}
 	
@@ -293,6 +410,7 @@ public class SingleEventTest {
 	private void testWhoOwnMeSuite() {
 		testWhoOwnMe2P();
 		testWhoOwnMe3P();
+		testWhoOwnMe9PAllWithAccompany();
 		testWhoOwnMe10P();
 	}
 
