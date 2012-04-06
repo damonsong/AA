@@ -154,8 +154,9 @@ public class SingleEventTest {
 		}
 		
 	}
-	
-	private void testCase0() {
+
+	@Test
+	public void testCase0() {
 		String expectedEventName = "Swimming";
 		String expectedEventPlace = "Chun Jian";
 		String expectedEventTime = "2012-3-3";
@@ -174,7 +175,9 @@ public class SingleEventTest {
 		Assert.assertEquals(expectedTotalAttendee, event.getTotalNumberOfAttendee());	
 	}
 	
-	private void testCase1() {
+
+	@Test
+	public void testCase1() {
 		Event event1 = new Event("FB", "KFC", "2012-3-1", 30);		
 		Attendee ds = new Attendee("Damon Song");
 		Attendee az = new Attendee("Alain Zhu");
@@ -258,32 +261,38 @@ public class SingleEventTest {
 	//////////////////////////////////////
 	// Who is My Lord Test Suite
 	//////////////////////////////////////
-	private void testWhoisMyLord2P() {
+
+	@Test
+	public void testWhoisMyLord2P() {
 		SetUp(2);
 		
 		Assert.assertEquals(sh.getName(), ds.getWhoIsMyLord(event));
 	}
-	
-	private void testWhoisMyLord3P() {
+
+	@Test
+	public void testWhoisMyLord3P() {
 		SetUp(3);
 		
 		Assert.assertEquals(dd.getName(), ds.getWhoIsMyLord(event));
 		Assert.assertFalse(sh.getName() == ds.getWhoIsMyLord(event));
 	}
 
-	private void testWhoisMyLord3PLordwithAccompany() {
+	@Test
+	public void testWhoisMyLord3PLordwithAccompany() {
 		SetUp(4);
 		
 		Assert.assertEquals(sh.getName(), ds.getWhoIsMyLord(event));
 	}
-	
-	private void testWhoisMyLord10P() {
+
+	@Test
+	public void testWhoisMyLord10P() {
 		SetUp(10);
 		
 		Assert.assertEquals(az.getName(), ds.getWhoIsMyLord(event));
 	}
-	
-	private void testWhoisMyLordSuite() {
+
+	@Test
+	public void testWhoisMyLordSuite() {
 		testWhoisMyLord2P();
 		testWhoisMyLord3P();
 		testWhoisMyLord3PLordwithAccompany();
@@ -292,13 +301,16 @@ public class SingleEventTest {
 	//////////////////////////////////////
 	// How Many I Should Repay Test Suite
 	//////////////////////////////////////	
-	private void testHowManyIShouldRepayTo2P() {
+
+	@Test
+	public void testHowManyIShouldRepayTo2P() {
 		SetUp(2);
 		
 		Assert.assertEquals(30.0f, ds.getHowManyIShouldRepayTo(sh));
 	}
-	
-	private void testHowManyIShouldRepayTo3P() {
+
+	@Test
+	public void testHowManyIShouldRepayTo3P() {
 		SetUp(3);
 		
 		Assert.assertEquals(30.0f, ds.getHowManyIShouldRepayTo(dd));
@@ -306,40 +318,46 @@ public class SingleEventTest {
 		Assert.assertEquals(30.f, sh.getHowManyIShouldRepayTo(dd));
 		Assert.assertEquals(0.0f, sh.getHowManyIShouldRepayTo(ds));
 	}
-	
-	private void testHowManyIShouldRepayTo3PLordWithAccompany() {
+
+	@Test
+	public void testHowManyIShouldRepayTo3PLordWithAccompany() {
 		SetUp(4);
 		
 		Assert.assertEquals(30.0f, ds.getHowManyIShouldRepayTo(sh));
 	}
-	
-	private void testHowManyIShouldRepayTo3POwnedWithAccompany() {
+
+	@Test
+	public void testHowManyIShouldRepayTo3POwnedWithAccompany() {
 		SetUp(5);
 		
 		Assert.assertEquals(60.0f, ds.getHowManyIShouldRepayTo(sh));
 	}
-	
-	private void testHowManyIShouldRepayTo4PAllWithAccompany() {
+
+	@Test
+	public void testHowManyIShouldRepayTo4PAllWithAccompany() {
 		SetUp(6);
 		
 		Assert.assertEquals(90.0f, ds.getHowManyIShouldRepayTo(sh));
 	}
-	
-	private void testHowManyIShouldRepayTo9PAllWithAccompany() {
+
+	@Test
+	public void testHowManyIShouldRepayTo9PAllWithAccompany() {
 		SetUp(7);
 		
 		Assert.assertEquals(90.0f, ds.getHowManyIShouldRepayTo(dd));
 		Assert.assertEquals(120.0f, sh.getHowManyIShouldRepayTo(dd));
 		Assert.assertEquals(0.0f, dd.getHowManyIShouldRepayTo(dd));
 	}
-	
-	private void testHowManyIShouldRepayTo10P() {
+
+	@Test
+	public void testHowManyIShouldRepayTo10P() {
 		SetUp(10);
 		
 		Assert.assertEquals(30.0f, ds.getHowManyIShouldRepayTo(az));
 	}
-	
-	private void testHowManyIShouldRepayToSuite() {
+
+	@Test
+	public void testHowManyIShouldRepayToSuite() {
 		testHowManyIShouldRepayTo2P(); 
 		testHowManyIShouldRepayTo3P();
 		testHowManyIShouldRepayTo3PLordWithAccompany();
@@ -348,16 +366,18 @@ public class SingleEventTest {
 		testHowManyIShouldRepayTo9PAllWithAccompany();
 		testHowManyIShouldRepayTo10P();
 	}
-	
-	private void testWhoOwnMe2P() {
+
+	@Test
+	public void testWhoOwnMe2P() {
 		SetUp(2);
 		
 		Assert.assertEquals(1, sh.getNumberOfWhoOwnMe());
 		Assert.assertEquals(ds.getName(), sh.getWhoOwnMe(0));
 		Assert.assertEquals(30.0f, sh.getShouldPayMe(0));
 	}
-	
-	private void testWhoOwnMe3P() {
+
+	@Test
+	public void testWhoOwnMe3P() {
 		SetUp(3);
 		
 		int index;
@@ -370,8 +390,9 @@ public class SingleEventTest {
 			Assert.assertEquals(30.0f, dd.getShouldPayMe(index));			
 		}
 	}
-	
-	private void testWhoOwnMe9PAllWithAccompany() {
+
+	@Test
+	public void testWhoOwnMe9PAllWithAccompany() {
 		SetUp(7);
 		
 		int index;
@@ -393,7 +414,8 @@ public class SingleEventTest {
 		}
 	}
 	
-	private void testWhoOwnMe10P() {
+	@Test
+	public void testWhoOwnMe10P() {
 		SetUp(10);
 		
 		int index;
@@ -407,7 +429,8 @@ public class SingleEventTest {
 		}
 	}
 	
-	private void testWhoOwnMeSuite() {
+	@Test
+	public void testWhoOwnMeSuite() {
 		testWhoOwnMe2P();
 		testWhoOwnMe3P();
 		testWhoOwnMe9PAllWithAccompany();
@@ -420,7 +443,7 @@ public class SingleEventTest {
 		testCase1();
 		testWhoisMyLordSuite(); 
 		testHowManyIShouldRepayToSuite();
-		testWhoOwnMeSuite();
+		//testWhoOwnMeSuite();
 	}
 
 }
