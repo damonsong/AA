@@ -221,7 +221,7 @@ public class Attendee extends Person implements Serializable{
 		return ownedList.get(index).ownedName;
 	}
 
-	public Object getShouldPayMe(int index) {
+	public float getShouldPayMe(int index) {
 		return ownedList.get(index).totalShouldPayMoney;
 	}
 

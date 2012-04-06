@@ -24,7 +24,7 @@ public class SerializableTest {
 	
 	private void SaveLoadSession() throws IOException, ClassNotFoundException {
 		Event event1 = new Event("Swimming", "FT", "2012-2-1", 90);
-		Event event2 = new Event("FB", "KFC", "2012-2-1", 150);
+		Event event2 = new Event("FB", "KFC", "2012-2-1", 90);
 		Attendee sh = new Attendee("Simon Huang");
 		Attendee wy = new Attendee("Wesley Yan");
 		Attendee dd = new Attendee("David Dong");
@@ -50,10 +50,19 @@ public class SerializableTest {
 		
 		Attendee resumedSimon = db.loadAttendee("Simon Huang");
 		Attendee resumedDavid = db.loadAttendee("David Dong");
-		float expectedRepayOfDavid = 80.0f;
+		float expectedRepayOfDavid = 60.0f;
 		float expectedRepayOfSimon = 0.0f;
 		
+		System.out.println("$#@$#@");
+		System.out.println(db.loadEvent().getRecordList().get(0).getAttendee().toString());
+		System.out.println(resumedSimon.toString());
+		
 		Assert.assertEquals(expectedRepayOfSimon, sh.getHowManyIShouldRepayTo(dd));
+		
+		Assert.assertEquals(expectedRepayOfSimon, resumedSimon.getHowManyIShouldRepayTo(resumedDavid));
+		
+		
+		
 		Assert.assertEquals(sh.getHowManyIShouldRepayTo(dd), resumedSimon.getHowManyIShouldRepayTo(resumedDavid));
 		Assert.assertEquals(expectedRepayOfDavid, dd.getHowManyIShouldRepayTo(sh));
 //		Assert.assertEquals(expectedRepayOfDavid, resumedDavid.getHowManyIShouldRepayTo(resumedSimon));

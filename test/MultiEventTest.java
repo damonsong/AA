@@ -66,7 +66,7 @@ public class MultiEventTest {
 		dd.summaryAll();
 		
 		Assert.assertEquals(2, sh.getNumberOfWhoOwnMe());
-		Assert.assertEquals(80, dd.getHowManyIShouldRepayTo(sh));
+		Assert.assertEquals(80.0f, dd.getHowManyIShouldRepayTo(sh));
 	}
 	@Test
 	public void test() {
