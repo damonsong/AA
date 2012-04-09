@@ -4,6 +4,10 @@ import java.io.IOException;
 
 import org.junit.Test;
 
+import Brain.Attendee;
+import Brain.Database;
+import Brain.Event;
+
 
 import junit.framework.Assert;
 

@@ -1,3 +1,16 @@
-The tool is used to manage samll group AA payment.
-David version!
+The tool is used to manage small group AA payment management.
+
+
+==================
+Folder Description
+==================
+
+1. \src
+    contains main development class for AA software.
+    Up to now, it only has one package named Brain for MVC design pattern "M" part.
+    
+2. \test
+    contain JUnit test cases for class.
+    
+3. Other file start with "." is setting files for Eclipse.
 

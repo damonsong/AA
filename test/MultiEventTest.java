@@ -3,8 +3,75 @@ import junit.framework.Assert;
 
 import org.junit.Test;
 
+import Brain.Attendee;
+import Brain.Database;
+import Brain.Event;
+
 
 public class MultiEventTest {
+	
+	Event event1 = null;
+	Event event2 = null;
+	
+	Attendee sh = null;
+	Attendee ds = null;
+	Attendee dd = null;
+	Attendee wy = null;
+	Attendee az = null;
+	Attendee fw = null;
+	Attendee jl = null;
+	Attendee jz = null;
+	Attendee jd = null;
+	Attendee sw = null;
+	
+	void SetUp(int caseindex){
+		
+		switch(caseindex){
+		case 0: {
+			
+			break;
+		}
+		
+		case 2: {
+			event1 = new Event("Swimming", "FT", "2000-1-1", 150);
+			event2 = new Event("FB", "KFC", "2000-1-1", 500);
+			
+			sh = new Attendee("Simon Huang");
+			ds = new Attendee("Damon Song");
+			dd = new Attendee("David Dong");
+			az = new Attendee("Alain Zhu");
+			wy = new Attendee("Wesley Yan");
+			
+			event1.AddRecord(sh, 0, 0);
+			event1.AddRecord(ds, 0, 0);
+			event1.AddRecord(dd, 0, 150);
+			event1.AddRecord(az, 0, 0);
+			event1.AddRecord(wy, 0, 0);
+			
+			event2.AddRecord(sh, 0, 0);
+			event2.AddRecord(ds, 0, 0);
+			event2.AddRecord(dd, 0, 0);
+			event2.AddRecord(az, 0, 500);
+			event2.AddRecord(wy, 0, 0);
+			
+			sh.summaryAll();
+			ds.summaryAll();
+			dd.summaryAll();
+			az.summaryAll();
+			wy.summaryAll();
+			
+			break;
+		}
+		
+		case 3: {
+			
+			break;
+		}
+		
+		default:
+			break;
+		}
+	}
 
 	private void testCase0() {
 		Event event1 = new Event("Swimming", "FT", "2000-1-1", 60);
