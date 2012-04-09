@@ -203,6 +203,8 @@ public class Attendee extends Person implements Serializable{
 	private void BalanceMyLordAndWhoOwnMe() {
 		int indexOfLordList = -1;
 		int indexOfOwnedList = -1;
+		ArrayList<String> removedLordList = new ArrayList<String>();
+		ArrayList<String> removedOwnedList = new ArrayList<String>();
 		
 		//Go through Lord List
 		for(indexOfLordList = 0; indexOfLordList < this.lordList.size(); indexOfLordList++) {
@@ -213,28 +215,60 @@ public class Attendee extends Person implements Serializable{
 					if(this.lordList.get(indexOfLordList).totalOwnedMoney == this.ownedList.get(indexOfOwnedList).totalShouldPayMoney) {
 						this.lordList.get(indexOfLordList).totalOwnedMoney = 0;
 						this.ownedList.get(indexOfOwnedList).totalShouldPayMoney = 0;
-						this.lordList.remove(indexOfLordList);
-						this.ownedList.remove(indexOfOwnedList);
+						removedLordList.add(this.lordList.get(indexOfLordList).lordName);
+						removedOwnedList.add(this.ownedList.get(indexOfOwnedList).ownedName);
 					}
 					else if(this.lordList.get(indexOfLordList).totalOwnedMoney > this.ownedList.get(indexOfOwnedList).totalShouldPayMoney){
 						float balanced = this.lordList.get(indexOfLordList).totalOwnedMoney -  this.ownedList.get(indexOfOwnedList).totalShouldPayMoney;
 						
 						this.lordList.get(indexOfLordList).totalOwnedMoney = balanced;
-						this.ownedList.remove(indexOfOwnedList);
+						this.ownedList.get(indexOfOwnedList).totalShouldPayMoney = 0;
+						removedOwnedList.add(this.ownedList.get(indexOfOwnedList).ownedName);
 					}
 					else {
 						float balanced = this.ownedList.get(indexOfOwnedList).totalShouldPayMoney  -  this.lordList.get(indexOfLordList).totalOwnedMoney;
 						
 						this.ownedList.get(indexOfOwnedList).totalShouldPayMoney = balanced;
-						this.lordList.remove(indexOfLordList);					
+						this.lordList.get(indexOfLordList).totalOwnedMoney = 0;	
+						removedLordList.add(this.lordList.get(indexOfLordList).lordName);
 					}
 				} //Exist in owned list
 				
 			} // Loop in owned list
 			
 		}// loop in lord list
+		
+		//Remove element from lordList if totalOwnedMoney is zero
+		for(indexOfLordList = 0; indexOfLordList < removedLordList.size(); indexOfLordList++) {
+			String name = removedLordList.get(indexOfLordList).toString();
+			int i = this.WhereIsMyLord(name);
+			this.lordList.remove(i);
+		}
+		//Remove element from ownedList if totalShouldPayMoney is zero
+		for(indexOfOwnedList = 0; indexOfOwnedList < removedOwnedList.size(); indexOfOwnedList++) {
+			String name = removedOwnedList.get(indexOfOwnedList).toString();
+			int i = this.WhereIsMyOwned(name);
+			this.ownedList.remove(i);
+		}
 	}
 	
+	public int WhereIsMyOwned(String name) {
+		int index = -1;
+		
+		for(index = 0; index < getNumberOfOwned(); index++) {
+			if(getMyOwnedName(index).equals(name)) {
+				break;
+			}
+		}
+		
+		if(index == getNumberOfOwned()) {
+			return -1;
+		}
+		else {
+			return index;
+		}
+	}
+
 	public void summaryAll() {
 		SummaryMyLord();
 		SummaryWhoOwnMe();
@@ -296,5 +330,42 @@ public class Attendee extends Person implements Serializable{
 		}
 		
 		return result;
+	}
+
+	public int getNumberOfLord() {
+		int numberOfLord = 0;
+		
+		numberOfLord = this.lordList.size();
+		
+		return numberOfLord;
+	}
+	
+	public int getNumberOfOwned() {
+		return this.ownedList.size();
+	}
+
+	public String getMyLordName(int i) {
+		return this.lordList.get(i).lordName;
+	}
+	
+	public String getMyOwnedName(int i) {
+		return this.ownedList.get(i).ownedName;
+	}
+	
+	public int WhereIsMyLord(String name) {
+		int index = -1;
+		
+		for(index = 0; index < getNumberOfLord(); index++) {
+			if(getMyLordName(index).equals(name)) {
+				break;
+			}
+		}
+		
+		if(index == getNumberOfLord()) {
+			return -1;
+		}
+		else {
+			return index;
+		}
 	}
 }
