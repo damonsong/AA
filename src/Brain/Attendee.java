@@ -126,7 +126,7 @@ public class Attendee extends Person implements Serializable{
 			} //end of event
 		} //end of eventlist
 						
-		System.out.println("******************FINALLY************************");
+		System.out.println("******************Lords************************");
 		System.out.println("*  " + this.getName() + " owned:");
 		for(i = 0; i < lordList.size(); i++) {
 			if(this.getName() != lordList.get(i).lordName)
@@ -143,7 +143,7 @@ public class Attendee extends Person implements Serializable{
 		
 		for(i = 0; i < eventList.size(); i++) {
 			
-			//ownMeMoney = eventList.get(i).getAvgCost();
+			indexOfLord = -1;
 			
 			for(j = 0; j < eventList.get(i).getRecordList().size(); j++) { //find lord in single event				
 				if((eventList.get(i).getRecordList().get(j).getPaidMoeny() != 0.0) &&
@@ -181,19 +181,64 @@ public class Attendee extends Person implements Serializable{
 				}
 			}//Rescan event in record list
 		}
-		
-		System.out.println("+++++++++++++++++++++++++++++++++++++++++++++++++");
+		System.out.println(" ");
+		System.out.println("++++++++++++++++++++OwnedList+++++++++++++++++++++++++++++");
 		System.out.println("*  " + this.getName() + " should get money from:");
 		for(i = 0; i < ownedList.size(); i++) {
 			if(this.getName() != ownedList.get(i).ownedName)
 				System.out.println("*  " + ownedList.get(i).ownedName + " : " + ownedList.get(i).totalShouldPayMoney + ".");
 		}
-		System.out.println("*************************************************");
+		System.out.println("++++++++++++++++++++++++++++++++++++++++++++++++++++++++++");
+	}
+	
+	////////////////////////////////////////////////////////////////////////////////////
+	// Must be called after SummaryMyLord() and SummaryWhoOwnMe()
+	// This behavior will balance my lord and who owned me.
+	// If someone in my lord list and also in my owned list, balance
+	// the money.
+	// If amount of lord and owned are same, remove from both lists.
+	// If amount of lord greater than owned, substract owned money and keep in lord list.
+	// If amount of lord less then owned, substract lord money and keep in owned list.
+	/////////////////////////////////////////////////////////////////////////////////////
+	private void BalanceMyLordAndWhoOwnMe() {
+		int indexOfLordList = -1;
+		int indexOfOwnedList = -1;
+		
+		//Go through Lord List
+		for(indexOfLordList = 0; indexOfLordList < this.lordList.size(); indexOfLordList++) {
+			//Pick up one and find in owned list
+			for(indexOfOwnedList = 0; indexOfOwnedList < this.ownedList.size(); indexOfOwnedList++) {
+				//Exist in owned list?
+				if(this.lordList.get(indexOfLordList).lordName.equals(this.ownedList.get(indexOfOwnedList).ownedName)){
+					if(this.lordList.get(indexOfLordList).totalOwnedMoney == this.ownedList.get(indexOfOwnedList).totalShouldPayMoney) {
+						this.lordList.get(indexOfLordList).totalOwnedMoney = 0;
+						this.ownedList.get(indexOfOwnedList).totalShouldPayMoney = 0;
+						this.lordList.remove(indexOfLordList);
+						this.ownedList.remove(indexOfOwnedList);
+					}
+					else if(this.lordList.get(indexOfLordList).totalOwnedMoney > this.ownedList.get(indexOfOwnedList).totalShouldPayMoney){
+						float balanced = this.lordList.get(indexOfLordList).totalOwnedMoney -  this.ownedList.get(indexOfOwnedList).totalShouldPayMoney;
+						
+						this.lordList.get(indexOfLordList).totalOwnedMoney = balanced;
+						this.ownedList.remove(indexOfOwnedList);
+					}
+					else {
+						float balanced = this.ownedList.get(indexOfOwnedList).totalShouldPayMoney  -  this.lordList.get(indexOfLordList).totalOwnedMoney;
+						
+						this.ownedList.get(indexOfOwnedList).totalShouldPayMoney = balanced;
+						this.lordList.remove(indexOfLordList);					
+					}
+				} //Exist in owned list
+				
+			} // Loop in owned list
+			
+		}// loop in lord list
 	}
 	
 	public void summaryAll() {
 		SummaryMyLord();
 		SummaryWhoOwnMe();
+		BalanceMyLordAndWhoOwnMe();
 	}
 
 	public ArrayList<OwnedRecord> getOwnMeList() {
